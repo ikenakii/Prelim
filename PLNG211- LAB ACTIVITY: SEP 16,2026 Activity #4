@@ -1,0 +1,16 @@
+try:
+item1 = float(input("Enter cost of item 1: "))
+item2 = float(input("Enter cost of item 2: "))
+payment = float(input("Enter your payment amount: "))
+
+total_cost = item1 + item2
+
+if payment < total_cost:
+    owed = round(total_cost - payment, 2)
+    print(f"Short payment. You still owe:  ₱{owed:.2f}")
+else:
+    change = round(payment - total_cost, 2)
+    print(f"Thank you for your payment! Your change is:  ₱{change:.2f}")
+except ValueError:
+print("Invalid input. Please enter numbers only.")
+
