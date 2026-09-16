@@ -1,0 +1,8 @@
+def find_last_alphabetically():
+word1 = input("Enter first word: ")
+word2 = input("Enter second word: ")
+word3 = input("Enter third word: ")
+
+last_word = max(word1, word2, word3)
+print("The word that comes last alphabetically is:", last_word)
+find_last_alphabetically()
