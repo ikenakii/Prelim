@@ -1,3 +1,5 @@
+package com.mycompany.mavenproject1;
+
 import java.util.Scanner;
 import java.util.Arrays;
 import java.io.BufferedReader;
@@ -5,13 +7,13 @@ import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.util.Date;
+import java.time.LocalDate;
 
-public class Main {
+public class Mavenproject1 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         String cont;
-
+        
         do {
             System.out.println("Choose the program you want to run");
             System.out.println("Number 1");
@@ -24,14 +26,14 @@ public class Main {
             
             System.out.print("Enter choice: ");
             int ch = sc.nextInt();
-
+            
             if (ch == 1) {
                 double[] num = new double[10];
                 System.out.println("Enter 10 real numbers:");
                 for (int i = 0; i < 10; i++) {
                     num[i] = sc.nextDouble();
                 }
-
+                
                 double sum = 0;
                 int posCount = 0;
                 for (int i = 0; i < 10; i++) {
@@ -45,7 +47,7 @@ public class Main {
                     avg = sum / posCount;
                 }
                 System.out.println("Sum: " + sum + " Average: " + avg);
-
+                
                 int negCount = 0;
                 for (int i = 0; i < 10; i++) {
                     if (num[i] < 0) {
@@ -53,7 +55,7 @@ public class Main {
                     }
                 }
                 System.out.println("Negative Count: " + negCount);
-
+                
                 double min = num[0];
                 for (int i = 1; i < 10; i++) {
                     if (num[i] < min) {
@@ -61,14 +63,14 @@ public class Main {
                     }
                 }
                 System.out.println("Minimum: " + min);
-
+                
             } else if (ch == 2) {
                 int[] num = new int[8];
                 System.out.println("Enter 8 integer numbers:");
                 for (int i = 0; i < 8; i++) {
                     num[i] = sc.nextInt();
                 }
-
+                
                 Arrays.sort(num);
                 int[] unique = new int[8];
                 int k = 0;
@@ -80,36 +82,36 @@ public class Main {
                 }
                 unique[k] = num[7];
                 k++;
-
+                
                 System.out.print("Removed duplicates: ");
                 for (int i = 0; i < k; i++) {
                     System.out.print(unique[i] + " ");
                 }
                 System.out.println();
-
+                
                 if (k >= 2) {
                     System.out.println("Second smallest: " + unique[1]);
                     System.out.println("Second largest: " + unique[k - 2]);
                 } else {
                     System.out.println("Not enough unique elements");
                 }
-
+                
             } else if (ch == 3) {
                 int[] arr = new int[5];
                 System.out.print("Enter Data in Array: ");
                 for (int i = 0; i < 5; i++) {
                     arr[i] = sc.nextInt();
                 }
-
+                
                 System.out.print("Stored Data in Array: ");
-                for (int i = 0; i < 5; i++) {
+                for (int i = 0; i < 5; i++) { 
                     System.out.print(arr[i] + " ");
                 }
                 System.out.println();
-
+                
                 System.out.print("Enter poss. of Element to Delete: ");
                 int pos = sc.nextInt();
-
+                
                 System.out.print("New data in Array: ");
                 for (int i = 0; i < 5; i++) {
                     if (i != pos) {
@@ -117,17 +119,17 @@ public class Main {
                     }
                 }
                 System.out.println();
-
+                
             } else if (ch == 4) {
                 System.out.print("Enter Size of Array : ");
                 int sz = sc.nextInt();
                 int[] arr = new int[sz];
-
+                
                 System.out.println("Enter any " + sz + " elements in Array:");
                 for (int i = 0; i < sz; i++) {
                     arr[i] = sc.nextInt();
                 }
-
+                
                 System.out.print("Even Elements: ");
                 for (int i = 0; i < sz; i++) {
                     if (arr[i] % 2 == 0) {
@@ -135,7 +137,7 @@ public class Main {
                     }
                 }
                 System.out.println();
-
+                
                 System.out.print("Odd Elements: ");
                 for (int i = 0; i < sz; i++) {
                     if (arr[i] % 2 != 0) {
@@ -143,7 +145,7 @@ public class Main {
                     }
                 }
                 System.out.println();
-
+                
             } else if (ch == 5) {
                 for (int i = 1; i <= 4; i++) {
                     for (int j = 1; j <= i; j++) {
@@ -154,12 +156,12 @@ public class Main {
                     }
                     System.out.println();
                 }
-
+                
             } else if (ch == 6) {
                 Student s1 = new Student();
-                Student s2 = new Student("S101", "John Doe", new Date("01/01/1995"), 150);
+                Student s2 = new Student("S101", "John Doe", LocalDate.of(1995, 1, 1), 150);
                 System.out.println("Total Students: " + Student.noOfStudents);
-
+                
             } else if (ch == 7) {
                 try {
                     BufferedReader br = new BufferedReader(new FileReader("data.txt"));
@@ -181,7 +183,7 @@ public class Main {
                     System.out.println("Database execution completed or simulated.");
                 }
             }
-
+            
             System.out.print("Do you want to continue ? Y/N: ");
             cont = sc.next();
         } while (cont.equalsIgnoreCase("Y"));
@@ -191,19 +193,19 @@ public class Main {
 class Student {
     public String studentNo;
     public String studentName;
-    public Date dateOfBirth;
+    public LocalDate dateOfBirth;
     public int tariffPoints;
     public static int noOfStudents = 0;
-
+    
     public Student() {
         this.studentNo = "not known";
         this.studentName = "not known";
-        this.dateOfBirth = new Date("01/01/1995");
+        this.dateOfBirth = LocalDate.of(1995, 1, 1);
         this.tariffPoints = 20;
         noOfStudents++;
     }
-
-    public Student(String studentNo, String studentName, Date dateOfBirth, int tariffPoints) {
+    
+    public Student(String studentNo, String studentName, LocalDate dateOfBirth, int tariffPoints) {
         this.studentNo = studentNo;
         this.studentName = studentName;
         this.dateOfBirth = dateOfBirth;
@@ -214,31 +216,17 @@ class Student {
         }
         noOfStudents++;
     }
-
-    public String getStudentNo() {
-        return studentNo;
-    }
-    public void setStudentNo(String studentNo) {
-        this.studentNo = studentNo;
-    }
-
-    public String getStudentName() {
-        return studentName;
-    }
-    public void setStudentName(String studentName) {
-        this.studentName = studentName;
-    }
-
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public int getTariffPoints() {
-        return tariffPoints;
-    }
+    
+    public String getStudentNo() { return studentNo; }
+    public void setStudentNo(String studentNo) { this.studentNo = studentNo; }
+    
+    public String getStudentName() { return studentName; }
+    public void setStudentName(String studentName) { this.studentName = studentName; }
+    
+    public LocalDate getDateOfBirth() { return dateOfBirth; }
+    public void setDateOfBirth(LocalDate dateOfBirth) { this.dateOfBirth = dateOfBirth; }
+    
+    public int getTariffPoints() { return tariffPoints; }
     public void setTariffPoints(int tariffPoints) {
         if (tariffPoints >= 20 && tariffPoints <= 280) {
             this.tariffPoints = tariffPoints;
