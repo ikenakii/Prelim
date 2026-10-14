@@ -1,7 +1,7 @@
 while True:
     print("Which program would you like to run?")
-    print("1. Program #1: Bytes and Bytearray (Secret Message)")
-    print("2. Program #2: Strings and Immutability (Name Analyzer)")
+    print("1. Program #1: Bytes and Bytearray")
+    print("2. Program #2: Strings and Immutability")
     
     while True:
         choice = input("Enter your choice (1 or 2): ").strip()
