@@ -1,0 +1,58 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        try {
+            
+            System.out.print("Enter total pages of the book: ");
+            int totalPages = Integer.parseInt(scanner.nextLine().trim());
+
+            System.out.print("Enter how many pages have been read: ");
+            int pagesRead = Integer.parseInt(scanner.nextLine().trim());
+
+            System.out.print("Enter how many days you have been reading: ");
+            int daysReading = Integer.parseInt(scanner.nextLine().trim());
+
+            System.out.print("Enter total days allotted for borrowing: ");
+            int daysAllotted = Integer.parseInt(scanner.nextLine().trim());
+
+            
+            if (totalPages <= 0 || pagesRead < 0 || daysReading < 0 || daysAllotted < 0 || pagesRead > totalPages) {
+                System.out.println("Invalid input values.");
+                return;
+            }
+
+            
+            double percentageRead = ((double) pagesRead / totalPages) * 100;
+            
+           
+            int pagesLeft = totalPages - pagesRead;
+
+           
+            int daysRemaining = daysAllotted - daysReading;
+            if (daysRemaining < 0) {
+                daysRemaining = 0;
+            }
+
+           
+            int pagesPerDay = 0;
+            if (daysRemaining > 0 && pagesLeft > 0) {
+               
+                pagesPerDay = (int) Math.ceil((double) pagesLeft / daysRemaining);
+            }
+
+            
+            System.out.println("\n--- Calculations ---");
+            System.out.printf("You have read %.0f%% of the book.%n", percentageRead);
+            System.out.printf("You have %d days remaining to return the book.%n", daysRemaining);
+            System.out.printf("You should read %d pages per day.%n", pagesPerDay);
+
+        } catch (Exception e) {
+            System.out.println("Error: Please enter valid integer numbers.");
+        } finally {
+            scanner.close();
+        }
+    }
+}
