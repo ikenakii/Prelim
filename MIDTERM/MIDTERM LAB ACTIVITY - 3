@@ -89,16 +89,25 @@ while True:
         print(f"Sliced last name: {sliced_last}")
 
         while True:
-            search_char = input("Enter one character to search: ")
+            search_char = input("Enter one character to search: ").strip()
             if len(search_char) == 1 and search_char.isalpha():
                 break
             print("Error: Input must be exactly one alphabet character. No numbers or special characters.")
 
-        if search_char in full_name:
-            index = full_name.find(search_char)
-            print(f"Character found at index: {index}")
-        else:
+        # --- UPDATED SEARCH LOGIC ---
+        lower_search = search_char.lower()
+        upper_search = search_char.upper()
+        found = False
+
+        print(f"\nSearching for '{lower_search}' or '{upper_search}' in '{full_name}':")
+        for index, char in enumerate(full_name):
+            if char == lower_search or char == upper_search:
+                print(f"Character '{char}' found at index: {index}")
+                found = True
+        
+        if not found:
             print("Character not found.")
+        # -----------------------------
             
     while True:
         run_again = input("\nDo you want to run any program again? (yes/no): ").strip().lower()
