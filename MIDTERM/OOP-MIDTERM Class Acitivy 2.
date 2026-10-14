@@ -25,7 +25,7 @@ public class Main {
             LocalDate tempDueDate = getValidDateString(scanner, "Enter Due Date (MM/DD/YYYY): ");
             
             if (tempDueDate.isBefore(issueDate)) {
-                System.out.println("Error: Due date cannot be earlier than the book's issue date.");
+                System.out.println("Due date cannot be earlier than the book's issue date.");
             } else {
                 dueDate = tempDueDate;
             }
@@ -39,7 +39,7 @@ public class Main {
 
         if (dueDate.isBefore(currentDate)) {
             long daysPastDue = ChronoUnit.DAYS.between(dueDate, currentDate);
-            System.out.printf("Error: You are already past your due date by %d day's).%n", daysPastDue);
+            System.out.printf("You are already past your due date by %d day's).%n", daysPastDue);
             System.out.println("Please return the book immediately.");
         } else {
             long daysRemaining = ChronoUnit.DAYS.between(currentDate, dueDate);
