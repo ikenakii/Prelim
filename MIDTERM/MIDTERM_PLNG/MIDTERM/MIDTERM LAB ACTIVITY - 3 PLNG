@@ -1,0 +1,121 @@
+while True:
+    print("Which program would you like to run?")
+    print("1. Program #1: Bytes and Bytearray")
+    print("2. Program #2: Strings and Immutability")
+    
+    while True:
+        choice = input("Enter your choice (1 or 2): ").strip()
+        if choice in ["1", "2"]:
+            break
+        print("Error: Invalid choice. Please enter 1 or 2.\n")
+    
+    if choice == "1":
+        while True:
+            message = input("Enter a message: ")
+            if message and message[0].isalpha():
+                break
+            print("Error: Message must start with a letter/character. Please try again.\n")
+
+        bytes_obj = message.encode('utf-8')
+        print(f"1. Bytes object: {bytes_obj}")
+
+        str_obj = bytes_obj.decode('utf-8')
+        print(f"2. Bytes to string: {str_obj}")
+
+        hex_str = bytes_obj.hex()
+        print(f"3. Bytes to hex: {hex_str}")
+
+        bytes_from_hex = bytes.fromhex(hex_str)
+        print(f"4. Hex to bytes: {bytes_from_hex}")
+
+        bytearray_from_str = bytearray(message, 'utf-8')
+        print(f"5. New bytearray: {bytearray_from_str}")
+
+        bytearray_from_bytes = bytearray(bytes_obj)
+        print(f"6. Bytes to bytearray: {bytearray_from_bytes}")
+
+        if "Python" in message:
+            start_idx = message.find("Python")
+            sliced_bytes = bytes_obj[start_idx:start_idx + 6]
+        elif len(bytes_obj) >= 6:
+            sliced_bytes = bytes_obj[6:]
+        else:
+            sliced_bytes = bytes_obj[:]
+        print(f"7. Sliced bytes: {sliced_bytes}")
+
+        if len(bytearray_from_bytes) > 0:
+            bytearray_from_bytes[0] = ord(chr(bytearray_from_bytes[0]).lower())
+        modified_msg = bytearray_from_bytes.decode('utf-8')
+        print(f"8. Modified message: {modified_msg}\n")
+
+    elif choice == "2":
+        while True:
+            first_name = input("Enter first name: ").strip()
+            if first_name.isalpha():
+                break
+            print("Error: First name must contain only alphabet letters. No numbers, decimals, or special characters.\n")
+
+        while True:
+            last_name = input("Enter last name: ").strip()
+            if last_name.isalpha():
+                break
+            print("Error: Last name must contain only alphabet letters. No numbers, decimals, or special characters.\n")
+
+        print(f"First name: {first_name}")
+        print(f"Last name: {last_name}")
+
+        full_name = first_name + " " + last_name
+        print(f"Full name: {full_name}")
+
+        print(f"First character: {full_name[0]}")
+        print(f"Last character: {full_name[-1]}")
+
+        try:
+            first_name[0] = "D"
+        except TypeError:
+            print("Strings are immutable; individual characters\ncannot be changed directly.")
+
+        new_name = "D" + first_name[1:]
+        print(f"New name: {new_name}")
+        print(f"Original name: {first_name}")
+
+        print("Characters in the full name:")
+        for char in full_name:
+            print(char)
+
+        sliced_first = full_name[:len(first_name)]
+        sliced_last = full_name[len(first_name) + 1:]
+        print(f"Sliced first name: {sliced_first}")
+        print(f"Sliced last name: {sliced_last}")
+
+        while True:
+            search_char = input("Enter one character to search: ").strip()
+            if len(search_char) == 1 and search_char.isalpha():
+                break
+            print("Error: Input must be exactly one alphabet character. No numbers or special characters.")
+
+        # --- UPDATED SEARCH LOGIC ---
+        lower_search = search_char.lower()
+        upper_search = search_char.upper()
+        found = False
+
+        print(f"\nSearching for '{lower_search}' or '{upper_search}' in '{full_name}':")
+        for index, char in enumerate(full_name):
+            if char == lower_search or char == upper_search:
+                print(f"Character '{char}' found at index: {index}")
+                found = True
+        
+        if not found:
+            print("Character not found.")
+        # -----------------------------
+            
+    while True:
+        run_again = input("\nDo you want to run any program again? (yes/no): ").strip().lower()
+        if run_again in ["yes", "no", "y", "n"]:
+            break
+        print("Error: Please enter 'yes' or 'no'.")
+        
+    if run_again in ["no", "n"]:
+        print("Exiting program. Goodbye!")
+        break
+    print("\n" + "="*40 + "\n")
