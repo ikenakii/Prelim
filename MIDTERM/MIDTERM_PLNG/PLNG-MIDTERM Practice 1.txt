@@ -1,0 +1,180 @@
+def program_1():
+    print("\n--- Program 1 ---")
+    arr = []
+    print("Enter 10 real numbers:")
+    for i in range(10):
+        while True:
+            try:
+                num = float(input(f"Element {i+1}: "))
+                arr.append(num)
+                break
+            except ValueError:
+                print("Invalid input. Please enter a real number.")
+    
+    # Task 1: Find the sum and average of positive numbers (using a separate loop)
+    pos_sum = 0
+    pos_count = 0
+    for num in arr:
+        if num > 0:
+            pos_sum += num
+            pos_count += 1
+    
+    if pos_count > 0:
+        pos_avg = pos_sum / pos_count
+        print(f"Sum of positive numbers: {pos_sum}")
+        print(f"Average of positive numbers: {pos_avg}")
+    else:
+        print("No positive numbers entered to calculate sum and average.")
+        
+    # Task 2: Count negative numbers (using a separate loop)
+    neg_count = 0
+    for num in arr:
+        if num < 0:
+            neg_count += 1
+    print(f"Count of negative numbers: {neg_count}")
+    
+    # Task 3: Find the minimum value (using a separate loop)
+    min_val = arr[0]
+    for num in arr:
+        if num < min_val:
+            min_val = num
+    print(f"Minimum value of the array: {min_val}")
+
+
+def program_2():
+    print("\n--- Program 2 ---")
+    arr = []
+    print("Enter 8 integer numbers:")
+    for i in range(8):
+        while True:
+            try:
+                num = int(input(f"Element {i+1}: "))
+                arr.append(num)
+                break
+            except ValueError:
+                print("Invalid input. Please enter an integer.")
+                
+    # 1. Remove duplicate elements from the array (maintaining order)
+    unique_arr = []
+    for num in arr:
+        if num not in unique_arr:
+            unique_arr.append(num)
+    print(f"Array after removing duplicates: {unique_arr}")
+    
+    # Find second largest and second smallest elements
+    if len(unique_arr) < 2:
+        print("Not enough unique elements to find second largest/smallest items.")
+    else:
+        # Sort a copy of unique array to safely extract targets
+        sorted_arr = sorted(unique_arr)
+        print(f"Second smallest element: {sorted_arr[1]}")
+        print(f"Second largest element: {sorted_arr[-2]}")
+
+
+def program_3():
+    print("\n--- Program 3 ---")
+    # Matching exact required text output formatting
+    user_input = input("Enter Data in Array: ")
+    arr = user_input.split()
+    
+    print("Stored Data in Array:", " ".join(arr))
+    
+    try:
+        pos = int(input("Enter poss. of Element to Delete: "))
+        if 0 <= pos < len(arr):
+            arr.pop(pos)
+            print("New data in Array:", " ".join(arr))
+        else:
+            print("Index out of bounds!")
+    except ValueError:
+        print("Invalid position entry.")
+
+
+def program_4():
+    print("\n--- Program 4 ---")
+    # Matching exact required text output formatting
+    try:
+        size = int(input("Enter Size of Array : "))
+        print(f"Enter any {size} elements in Array: ")
+        
+        # Reads elements from space-separated input
+        user_input = input()
+        arr = [int(x) for x in user_input.split()][:size]
+        
+        even_elements = [str(x) for x in arr if x % 2 == 0]
+        odd_elements = [str(x) for x in arr if x % 2 != 0]
+        
+        print("Even Elements:", " ".join(even_elements))
+        print("Odd Elements:", " ".join(odd_elements))
+    except ValueError:
+        print("Please enter valid integers.")
+
+
+def program_5():
+    print("\n--- Program 5 ---")
+    print("OUTPUT :")
+    # Row i (1 to 4) starts with '*' and appends 'A*' (i-1) times
+    for i in range(1, 5):
+        print("*" + "A*" * (i - 1))
+
+
+def program_6():
+    print("\n--- Program 6 ---")
+    basic_salary = 12000
+    da = 0.12 * basic_salary
+    hra = 150
+    ta = 120
+    others = 450
+    pf = 0.14 * basic_salary
+    it = 0.15 * basic_salary
+    
+    net_salary = (basic_salary + da + hra + ta + others) - (pf + it)
+    
+    print(f"Basic salary : $ {basic_salary}")
+    print(f"DA           : $ {da:.2f}")
+    print(f"HRA          : $ {hra}")
+    print(f"TA           : $ {ta}")
+    print(f"Others       : $ {450}")
+    print(f"PF cut       : $ {pf:.2f}")
+    print(f"IT cut       : $ {it:.2f}")
+    print("-" * 30)
+    print(f"Net Salary   : $ {net_salary:.2f}")
+
+
+def main_menu():
+    while True:
+        print("\nFINAL OUTPUT :")
+        print("Choose the program you want to run")
+        print("Program #1")
+        print("Program #2")
+        print("Program #3")
+        print("Program #4")
+        print("Program #5")
+        print("Program #6")
+        
+        choice = input("\nEnter choice (1-6): ").strip()
+        
+        if choice == '1':
+            program_1()
+        elif choice == '2':
+            program_2()
+        elif choice == '3':
+            program_3()
+        elif choice == '4':
+            program_4()
+        elif choice == '5':
+            program_5()
+        elif choice == '6':
+            program_6()
+        else:
+            print("Invalid selection! Please enter a number between 1 and 6.")
+            continue
+            
+        # Ask user to continue or quit
+        cont = input("\nDo you want to continue ? Y/N: ").strip().upper()
+        if cont != 'Y':
+            print("Exiting system. Goodbye!")
+            break
+
+if __name__ == "__main__":
+    main_menu()

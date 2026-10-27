@@ -1,0 +1,89 @@
+import re
+from datetime import datetime, date
+import math
+
+def get_valid_integer(prompt: str, allow_zero: bool = False) -> int:
+    while True:
+        user_input = input(prompt).strip()
+        if '.' in user_input:
+            print("Error: Please enter a whole number without decimals.")
+            continue
+        try:
+            value = int(user_input)
+            min_limit = -1 if allow_zero else 0
+            if value < 0 or (not allow_zero and value == 0):
+                print(f"Error: Number must be positive and greater than {min_limit}.")
+            else:
+                return value
+        except ValueError:
+            print("Error: Please enter valid numbers only.")
+
+def get_valid_pages_read(prompt: str, total_pages: int) -> int:
+    while True:
+        user_input = input(prompt).strip()
+        if '.' in user_input:
+            print("Error: Please enter a whole number without decimals.")
+            continue
+        try:
+            value = int(user_input)
+            if value < 0:
+                print("Error: Number must be positive and greater than -1.")
+            elif value > total_pages:
+                print(f"Error: Pages read cannot be greater than total pages ({total_pages}).")
+            else:
+                return value
+        except ValueError:
+            print("Error: Please enter valid numbers only.")
+
+def get_valid_date_string(prompt: str) -> date:
+    while True:
+        user_input = input(prompt).strip()
+        if not re.match(r"^\d{2}/\d{2}/\d{4}$", user_input):
+            print("Error: Please enter the date using the exact format MM/DD/YYYY (e.g., 10/13/2026).")
+            continue
+        try:
+            return datetime.strptime(user_input, "%m/%d/%Y").date()
+        except ValueError:
+            print("Error: That is not a valid date on the calendar. Please check your month or day limits.")
+
+def main():
+    current_date = date(2026, 10, 14)
+    print()
+
+    total_pages = get_valid_integer("Enter total pages of the book: ", allow_zero=False)
+    pages_read = get_valid_pages_read("Enter how many pages have been read: ", total_pages)
+
+    print()
+    issue_date = get_valid_date_string("Enter Issue Date (MM/DD/YYYY): ")
+
+    due_date = None
+    while due_date is None:
+        temp_due_date = get_valid_date_string("Enter Due Date (MM/DD/YYYY): ")
+        if temp_due_date < issue_date:
+            print("Due date cannot be earlier than the book's issue date.")
+        else:
+            due_date = temp_due_date
+
+    percentage_read = (pages_read / total_pages) * 100
+    pages_left = total_pages - pages_read
+
+    print()
+    print(f"You have read {percentage_read:.0f}% of the book.")
+
+    if due_date < current_date:
+        days_past_due = (current_date - due_date).days
+        print(f"You are already past your due date by {days_past_due} day(s).")
+        print("Please return the book immediately.")
+    else:
+        days_remaining = (due_date - current_date).days
+        pages_per_day = 0
+        if days_remaining > 0 and pages_left > 0:
+            pages_per_day = math.ceil(pages_left / days_remaining)
+        elif days_remaining == 0 and pages_left > 0:
+            pages_per_day = pages_left
+
+        print(f"You have {days_remaining} days remaining to return the book.")
+        print(f"You should read {pages_per_day} pages per day")
+
+if __name__ == "__main__":
+    main()
