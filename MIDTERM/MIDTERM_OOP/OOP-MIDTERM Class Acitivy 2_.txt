@@ -1,0 +1,128 @@
+import java.util.Scanner;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        LocalDate currentDate = LocalDate.of(2026, 10, 14);
+        DateTimeFormatter displayFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+
+        
+        System.out.println();
+
+        int totalPages = getValidInteger(scanner, "Enter total pages of the book: ", false);
+        int pagesRead = getValidPagesRead(scanner, "Enter how many pages have been read: ", totalPages);
+
+        System.out.println();
+        LocalDate issueDate = getValidDateString(scanner, "Enter Issue Date (MM/DD/YYYY): ");
+
+        LocalDate dueDate = null;
+        while (dueDate == null) {
+            LocalDate tempDueDate = getValidDateString(scanner, "Enter Due Date (MM/DD/YYYY): ");
+            
+            if (tempDueDate.isBefore(issueDate)) {
+                System.out.println("Due date cannot be earlier than the book's issue date.");
+            } else {
+                dueDate = tempDueDate;
+            }
+        }
+
+        double percentageRead = ((double) pagesRead / totalPages) * 100;
+        int pagesLeft = totalPages - pagesRead;
+
+        System.out.println();
+        System.out.printf("You have read %.0f%% of the book.%n", percentageRead);
+
+        if (dueDate.isBefore(currentDate)) {
+            long daysPastDue = ChronoUnit.DAYS.between(dueDate, currentDate);
+            System.out.printf("You are already past your due date by %d day's).%n", daysPastDue);
+            System.out.println("Please return the book immediately.");
+        } else {
+            long daysRemaining = ChronoUnit.DAYS.between(currentDate, dueDate);
+
+            int pagesPerDay = 0;
+            if (daysRemaining > 0 && pagesLeft > 0) {
+                pagesPerDay = (int) Math.ceil((double) pagesLeft / daysRemaining); 
+            } else if (daysRemaining == 0 && pagesLeft > 0) {
+                pagesPerDay = pagesLeft; 
+            }
+
+            System.out.printf("You have %d days remaining to return the book.%n", daysRemaining);
+            System.out.printf("You should read %d pages per day%n", pagesPerDay);
+        }
+
+        scanner.close();
+    }
+
+    private static LocalDate getValidDateString(Scanner scanner, String prompt) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        
+        while (true) {
+            System.out.print(prompt);
+            String input = scanner.nextLine().trim();
+            
+            if (!input.matches("\\d{2}/\\d{2}/\\d{4}")) {
+                System.out.println("Error: Please enter the date using the exact format MM/DD/YYYY (e.g., 10/13/2026).");
+                continue;
+            }
+            
+            try {
+                return LocalDate.parse(input, formatter);
+            } catch (DateTimeParseException e) {
+                System.out.println("Error: That is not a valid date on the calendar. Please check your month or day limits.");
+            }
+        }
+    }
+
+    private static int getValidPagesRead(Scanner scanner, String prompt, int totalPages) {
+        while (true) {
+            System.out.print(prompt);
+            if (scanner.hasNextInt()) {
+                int value = scanner.nextInt();
+                scanner.nextLine(); 
+
+                if (value < 0) {
+                    System.out.println("Error: Number must be positive and greater than -1.");
+                } else if (value > totalPages) {
+                    System.out.println("Error: Pages read cannot be greater than total pages (" + totalPages + ").");
+                } else {
+                    return value;
+                }
+            } else {
+                String invalidInput = scanner.nextLine();
+                if (invalidInput.contains(".")) {
+                    System.out.println("Error: Please enter a whole number without decimals.");
+                } else {
+                    System.out.println("Error: Please enter valid numbers only.");
+                }
+            }
+        }
+    }
+
+    private static int getValidInteger(Scanner scanner, String prompt, boolean allowZero) {
+        while (true) {
+            System.out.print(prompt);
+            if (scanner.hasNextInt()) {
+                int value = scanner.nextInt();
+                scanner.nextLine(); 
+
+                if (value < 0 || (!allowZero && value == 0)) {
+                    System.out.println("Error: Number must be positive and greater than " + (allowZero ? "-1" : "0") + ".");
+                } else {
+                    return value;
+                }
+            } else {
+                String invalidInput = scanner.nextLine();
+                if (invalidInput.contains(".")) {
+                    System.out.println("Error: Please enter a whole number without decimals.");
+                } else {
+                    System.out.println("Error: Please enter valid numbers only.");
+                }
+            }
+        }
+    }
+}
