@@ -1,0 +1,3 @@
+Simulating DB Record Inserts:
+Inserted: 101 | SANDER                    | 00000000
+Inserted: 102 | MAKSUDA SULTANA           | 0000000
