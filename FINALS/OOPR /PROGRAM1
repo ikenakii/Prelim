@@ -1,0 +1,39 @@
+import java.util.Scanner;
+
+public class Program1 {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+      
+        System.out.print("How many numbers do you want to enter? ");
+        int size = scanner.nextInt();
+
+       
+        int[] numbers = new int[size];
+
+        
+        System.out.println("Enter " + size + " integers:");
+        for (int i = 0; i < size; i++) {
+            System.out.print("Number " + (i + 1) + ": ");
+            numbers[i] = scanner.nextInt();
+        }
+
+       
+        System.out.print("\nEven numbers: ");
+        for (int num : numbers) {
+            if (num % 2 == 0) {
+                System.out.print(num + " ");
+            }
+        }
+
+        
+        System.out.print("\nOdd numbers: ");
+        for (int num : numbers) {
+            if (num % 2 != 0) {
+                System.out.print(num + " ");
+            }
+        }
+
+        scanner.close();
+    }
+}
